@@ -1,0 +1,55 @@
+.sortvisualizer{
+    border: 2px solid black;
+    padding: 20px;
+    margin-top: 10px;
+    width: 80%;
+    margin: 0 auto;
+    background-color: lightgray;
+    height: 390px;
+}
+
+.sortvisualizer__ArrayBar{
+    position: relative;
+    background-color: darkslateblue;
+    display: inline-block;
+    margin: 0 1px;
+}
+
+.sortvisualizer__ArrayBars{
+    margin-top: 20px;
+}
+
+.sortvisualizer__Button{
+    background-color: lightgray;
+}
+
+.sortvisualizer__Button > button{
+    margin-left: 5px;
+}
+
+.sortvisualizer__Sliders{
+    display: flex;
+    width: 80%;
+    margin: 0 auto; 
+    justify-content: space-between;
+}
+.sortvisualizer__Slider{  
+    width: 30%;
+}
+.sortvisualizer__Slider > h4{  
+    margin-top: -15px;
+}
+
+.sortvisualizer__Slider__Label{
+    justify-content: space-between; 
+    display: flex;
+    margin-top: -35px;
+}
+
+.sortvisualizer__Slider__Label__Heading{
+    margin: 0 auto;
+    width: 60%;
+    justify-content: space-between; 
+    display: flex;
+}
+
