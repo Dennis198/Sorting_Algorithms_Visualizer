@@ -8,6 +8,7 @@ import {heapSort} from "../sortingAlgorithms/heapSort";
 import {cocktailSort} from "../sortingAlgorithms/cocktailSort"
 import {selectionSort} from "../sortingAlgorithms/selectionSort";
 import {bogoSort} from "../sortingAlgorithms/bogoSort";
+import {shellSort} from "../sortingAlgorithms/shellSort";
 import { Button, Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -106,6 +107,14 @@ export default class SortVisualizer extends React.Component{
     insertionSort(){
         let newArray = this.state.array.slice();      
         const animations = insertionSort(newArray);
+        this.setState({isRunning: true});
+        this.animeteSort(animations,newArray);
+    }
+
+    //Compute and animte Insertion Sort
+    shellSort(){
+        let newArray = this.state.array.slice();      
+        const animations = shellSort(newArray);
         this.setState({isRunning: true});
         this.animeteSort(animations,newArray);
     }
@@ -289,6 +298,7 @@ export default class SortVisualizer extends React.Component{
                     </div>
                     <div className="sortvisualizer__Button">
                         <Button variant="contained" color="primary" onClick={() => this.cocktailSort()}>Cocktail Sort</Button>
+                        <Button variant="contained" color="primary" onClick={() => this.shellSort()}>Shell Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.bogoSort()}>Bogo Sort</Button>
                     </div>               
                 </>
@@ -305,6 +315,7 @@ export default class SortVisualizer extends React.Component{
                     </div>
                     <div className="sortvisualizer__Button">
                         <Button disabled variant="contained" color="primary">Cocktail Sort</Button>
+                        <Button disabled variant="contained" color="primary">Shell Sort</Button>
                         <Button disabled variant="contained" color="primary">Bogo Sort</Button>
                     </div> 
                 </>
