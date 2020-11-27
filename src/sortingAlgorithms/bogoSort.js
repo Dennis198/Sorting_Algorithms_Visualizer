@@ -8,18 +8,22 @@
 Bogo sort
 https://en.wikipedia.org/wiki/Bogo_sort  
 */
+const MAX_SORT_STEPS=80000; 
+
 export function bogoSort(array){
     const animations = [];
     if(array.length <= 1) return array;
-    let length = array.length-1;
+    let length = array.length;
     let randomI=0;
     let randomJ=0;
     let t;
     let counter = 0;
 
-    while(!isSorted(array) && counter<50000){
+    while(!isSorted(array) && counter<MAX_SORT_STEPS){
         randomI=Math.floor(Math.random()*length);
         randomJ=Math.floor(Math.random()*length);
+        console.log(randomI);
+        console.log(randomJ);
         animations.push([randomI,randomJ]);
         animations.push([randomI, randomJ]);
         animations.push([randomI,array[randomJ]]);
