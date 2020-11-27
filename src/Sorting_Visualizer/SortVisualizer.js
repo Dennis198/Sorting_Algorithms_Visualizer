@@ -2,9 +2,12 @@ import React from 'react'
 import "./SortVisualizer.css"
 import {mergeSort} from "../sortingAlgorithms/mergeSort";
 import {bubbleSort} from "../sortingAlgorithms/bubbleSort";
+import {insertionSort} from "../sortingAlgorithms/insertionSort";
 import {quickSort} from "../sortingAlgorithms/quickSort";
 import {heapSort} from "../sortingAlgorithms/heapSort";
+import {cocktailSort} from "../sortingAlgorithms/cocktailSort"
 import {selectionSort} from "../sortingAlgorithms/selectionSort";
+import {bogoSort} from "../sortingAlgorithms/bogoSort";
 import { Button, Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -99,10 +102,34 @@ export default class SortVisualizer extends React.Component{
         this.animeteSort(animations,newArray);
     }
 
+    //Compute and animte Insertion Sort
+    insertionSort(){
+        let newArray = this.state.array.slice();      
+        const animations = insertionSort(newArray);
+        this.setState({isRunning: true});
+        this.animeteSort(animations,newArray);
+    }
+
     //Compute and animate Selection sort
     selectionSort(){
         let newArray = this.state.array.slice();      
         const animations = selectionSort(newArray);
+        this.setState({isRunning: true});
+        this.animeteSort(animations,newArray);
+    }
+
+    //Compute and animate Bogo sort
+    bogoSort(){
+        let newArray = this.state.array.slice();      
+        const animations = bogoSort(newArray);
+        this.setState({isRunning: true});
+        this.animeteSort(animations,newArray);
+    }
+
+    //Compute and animate Bogo sort
+    cocktailSort(){
+        let newArray = this.state.array.slice();      
+        const animations = cocktailSort(newArray);
         this.setState({isRunning: true});
         this.animeteSort(animations,newArray);
     }
@@ -250,23 +277,37 @@ export default class SortVisualizer extends React.Component{
         return(
             <div className="sortvisualizer">
                 {!this.state.isRunning ? 
+                <>
                     <div className="sortvisualizer__Button">
-                    <Button variant="contained" color="secondary" onClick={(e) => this.handleSizeChange(e,this.state.sliderValue)}>Generate New Numbers</Button>
+                        <Button variant="contained" color="secondary" onClick={(e) => this.handleSizeChange(e,this.state.sliderValue)}>Generate New Numbers</Button>
                         <Button variant="contained" color="primary" onClick={() => this.bubbleSort()}>Bubble Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.selectionSort()}>Selection Sort</Button>
+                        <Button variant="contained" color="primary" onClick={() => this.insertionSort()}>Insertion Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.mergeSort()}>Merge Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.quickSort()}>Quick Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.heapSort()}>Heap Sort</Button>
                     </div>
-                    :
                     <div className="sortvisualizer__Button">
-                        <Button disabled variant="contained" color="secondary" onClick={() => this.resetArray()}>Generate New Numbers</Button>
-                        <Button disabled variant="contained" color="primary" onClick={() => this.bubbleSort()}>Bubble Sort</Button>
-                        <Button disabled variant="contained" color="primary" onClick={() => this.selectionSort()}>Selection Sort</Button>
-                        <Button disabled variant="contained" color="primary" onClick={() => this.mergeSort()}>Merge Sort</Button>
-                        <Button disabled variant="contained" color="primary" onClick={() => this.quickSort()}>Quick Sort</Button>
-                        <Button disabled variant="contained" color="primary" onClick={() => this.heapSort()}>Heap Sort</Button>
+                        <Button variant="contained" color="primary" onClick={() => this.cocktailSort()}>Cocktail Sort</Button>
+                        <Button variant="contained" color="primary" onClick={() => this.bogoSort()}>Bogo Sort</Button>
+                    </div>               
+                </>
+                    :
+                <>
+                    <div className="sortvisualizer__Button">
+                        <Button disabled variant="contained" color="secondary">Generate New Numbers</Button>
+                        <Button disabled variant="contained" color="primary">Bubble Sort</Button>
+                        <Button disabled variant="contained" color="primary">Selection Sort</Button>
+                        <Button disabled variant="contained" color="primary">Insertion Sort</Button>
+                        <Button disabled variant="contained" color="primary">Merge Sort</Button>
+                        <Button disabled variant="contained" color="primary">Quick Sort</Button>
+                        <Button disabled variant="contained" color="primary">Heap Sort</Button>
                     </div>
+                    <div className="sortvisualizer__Button">
+                        <Button disabled variant="contained" color="primary">Cocktail Sort</Button>
+                        <Button disabled variant="contained" color="primary">Bogo Sort</Button>
+                    </div> 
+                </>
                 }
                 <div className="sortvisualizer__ArrayBars">
                     {array.map((value,idx) =>(

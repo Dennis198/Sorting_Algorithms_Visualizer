@@ -1,7 +1,7 @@
 # Sorting Algorithm Visualizer
 
-A web-based animation tool to visualize common sorting algorithms: Bubblesort, Selection Sort, Merge Sort,
-Quick Sort and Heap Sort.
+A web-based animation tool to visualize common sorting algorithms: Bubblesort, Selection Sort, Insection Sort,
+Cocktail Sort, Merge Sort, Quick Sort, Heap Sort and Bogo Sort (Stupid Sort.
 
 ![](images/IMG_ReadMe.PNG)
 
