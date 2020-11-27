@@ -9,6 +9,7 @@ import {cocktailSort} from "../sortingAlgorithms/cocktailSort"
 import {selectionSort} from "../sortingAlgorithms/selectionSort";
 import {bogoSort} from "../sortingAlgorithms/bogoSort";
 import {shellSort} from "../sortingAlgorithms/shellSort";
+import {gnomeSort} from "../sortingAlgorithms/gnomeSort";
 import { Button, Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -131,6 +132,14 @@ export default class SortVisualizer extends React.Component{
     bogoSort(){
         let newArray = this.state.array.slice();      
         const animations = bogoSort(newArray);
+        this.setState({isRunning: true});
+        this.animeteSort(animations,newArray);
+    }
+
+    //Compute and animate Bogo sort
+    gnomeSort(){
+        let newArray = this.state.array.slice();      
+        const animations = gnomeSort(newArray);
         this.setState({isRunning: true});
         this.animeteSort(animations,newArray);
     }
@@ -298,6 +307,7 @@ export default class SortVisualizer extends React.Component{
                     </div>
                     <div className="sortvisualizer__Button">
                         <Button variant="contained" color="primary" onClick={() => this.cocktailSort()}>Cocktail Sort</Button>
+                        <Button variant="contained" color="primary" onClick={() => this.gnomeSort()}>Gnome Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.shellSort()}>Shell Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.bogoSort()}>Bogo Sort</Button>
                     </div>               
@@ -315,6 +325,7 @@ export default class SortVisualizer extends React.Component{
                     </div>
                     <div className="sortvisualizer__Button">
                         <Button disabled variant="contained" color="primary">Cocktail Sort</Button>
+                        <Button disabled variant="contained" color="primary">Gnome Sort</Button>
                         <Button disabled variant="contained" color="primary">Shell Sort</Button>
                         <Button disabled variant="contained" color="primary">Bogo Sort</Button>
                     </div> 

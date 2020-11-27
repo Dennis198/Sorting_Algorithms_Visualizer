@@ -14,7 +14,6 @@ const GAPS=[1,4,10,23,57,132,301,701];
 export function shellSort(array){
     const animations = [];
     if(array.length <= 1) return array;
-    console.log(array);
     
     for(let k = GAPS.length-1;k>=0;k--){
         if(k>=array.length)continue;
