@@ -15,6 +15,13 @@
     margin: 0 1px;
 }
 
+.sortvisualizer__ArrayBar_Stabalizer{
+    position: relative;
+    background-color: lightgray;
+    display: inline-block;
+    margin: 0 1px;
+}
+
 .sortvisualizer__ArrayBars{
     margin-top: 20px;
 }

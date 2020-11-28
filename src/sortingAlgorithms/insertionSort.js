@@ -8,36 +8,34 @@
 Inserition sort
 https://en.wikipedia.org/wiki/Bubble_sort  
 */
+const COLOR_CHANGE = true;
+const COLOR_FOCUS = true;
+const COLOR_NORMAL = false;
+const HEIGHT_CHANGE = false;
+
 export function insertionSort(array){
     const animations = [];
     if(array.length <= 1) return array;
     let length = array.length;
-    let swap = true;
 
     for(let i=1; i<length; i++){
-        animations.push([i-1,i]);
-        animations.push([i-1,i]);
+        animations.push([COLOR_CHANGE,COLOR_FOCUS,i-1,i]);
         if(array[i-1] > array[i]){
-            animations.push([i,array[i]]);
-            animations.push([i,array[i]]);
-            let t  = array[i];
+            let temp  = array[i];
             let k = i;
-            for(; k>0 && array[k-1]>t;k--){
-                animations.push([k-1,k]);
-                animations.push([k-1,k]);
-                animations.push([k,array[k-1]]);
-                animations.push([k,array[k-1]]);
+            for(; k>0 && array[k-1]>temp;k--){
+                animations.push([COLOR_CHANGE,COLOR_FOCUS,k-1,k]);
+                animations.push([HEIGHT_CHANGE,null,k,array[k-1]]);
+                animations.push([COLOR_CHANGE,COLOR_NORMAL,k-1,k]);
                 array[k] = array[k-1];
             }
-            animations.push([i,k]);
-            animations.push([i,k]);
-            animations.push([k,t]);
-            animations.push([k,t]);
-            array[k] = t;
+            animations.push([COLOR_CHANGE,COLOR_FOCUS,i,k]);
+            animations.push([HEIGHT_CHANGE,null,k,temp]);
+            animations.push([COLOR_CHANGE,COLOR_NORMAL,i,k]);
+            array[k] = temp;
             continue;
         }
-        animations.push([i,array[i]]);
-        animations.push([i,array[i]]);
+        animations.push([COLOR_CHANGE,COLOR_NORMAL,i-1,i]);
     }
     return animations;
 }

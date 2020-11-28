@@ -8,11 +8,15 @@
 Heap Sort
 https://en.wikipedia.org/wiki/Heapsort
 */
+const COLOR_CHANGE = true;
+const COLOR_FOCUS = true;
+const COLOR_NORMAL = false;
+const HEIGHT_CHANGE = false;
+
 export function heapSort(array){
     const animations = [];
     if(array.length<=1) return array;
     heapSortHelper(array, animations);
-    console.log(array);
     return animations
 }
 
@@ -22,10 +26,10 @@ function heapSortHelper(array, animations){
     }
 
     for(let i=array.length-1; i>0;i--){
-        animations.push([0, i]);
-        animations.push([0, i]);
-        animations.push([i, array[0]]);
-        animations.push([0 ,array[i]]);
+        animations.push([COLOR_CHANGE,COLOR_FOCUS,0,i]);
+        animations.push([HEIGHT_CHANGE,null,0,array[i]]);
+        animations.push([HEIGHT_CHANGE,null,i,array[0]]);
+        animations.push([COLOR_CHANGE,COLOR_NORMAL,0,i]);
         let t = array[i];
         array[i] = array[0];
         array[0] = t;
@@ -33,10 +37,10 @@ function heapSortHelper(array, animations){
     }
 
     for(let i=0, k=array.length-1;i<array.length/2; i++){
-        animations.push([i, k]);
-        animations.push([i, k]);
-        animations.push([i, array[k]]);
-        animations.push([k ,array[i]]);
+        animations.push([COLOR_CHANGE,COLOR_FOCUS,i,k]);
+        animations.push([HEIGHT_CHANGE,null,i,array[k]]);
+        animations.push([HEIGHT_CHANGE,null,k,array[i]]);
+        animations.push([COLOR_CHANGE,COLOR_NORMAL,i,k]);
         let t = array[i];
         array[i] = array[k];
         array[k] = t;
@@ -55,10 +59,10 @@ function heap(array, father, end, animations){
         if(array[son]>array[right]) son = right;
     }
     if(father !== son){
-        animations.push([father, son]);
-        animations.push([father, son]);
-        animations.push([father, array[son]]);
-        animations.push([son, array[father]]);
+        animations.push([COLOR_CHANGE, COLOR_FOCUS,father,son]);
+        animations.push([HEIGHT_CHANGE, null,father,array[son]]);
+        animations.push([HEIGHT_CHANGE, null,son,array[father]]);
+        animations.push([COLOR_CHANGE, COLOR_NORMAL,father,son]);
         let t = array[son];
         array[son] = array[father];
         array[father] = t;

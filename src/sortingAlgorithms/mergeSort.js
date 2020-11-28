@@ -9,6 +9,11 @@
 Merge Sort
 https://en.wikipedia.org/wiki/Merge_sort  
 */
+const COLOR_CHANGE = true;
+const COLOR_FOCUS = true;
+const COLOR_NORMAL = false;
+const HEIGHT_CHANGE = false;
+
 export function mergeSort(array){
     const animations = [];
     if(array.length <= 1) return array;
@@ -43,26 +48,27 @@ function doMerge(
     let i = startIdx;
     let j = middleIdx+1;
     while(i <= middleIdx && j <= endIdx){
-        animations.push([i,j]);
-        animations.push([i,j]);
+        animations.push([COLOR_CHANGE,COLOR_FOCUS,i,j]);
         if(auxilaryArray[i] <= auxilaryArray[j]){
-            animations.push([k, auxilaryArray[i]]);
+            animations.push([HEIGHT_CHANGE,null,k,auxilaryArray[i]]);
             mainArray[k++] = auxilaryArray[i++];
+            animations.push([COLOR_CHANGE,COLOR_NORMAL,k-1,i-1]);
         } else {
-            animations.push([k, auxilaryArray[j]]);
+            animations.push([HEIGHT_CHANGE,null,k,auxilaryArray[j]]);
             mainArray[k++] = auxilaryArray[j++];
+            animations.push([COLOR_CHANGE,COLOR_NORMAL,k-1,j-1]);
         }
     }
     while(i <= middleIdx){
-        animations.push([i,i]);
-        animations.push([i,i]);
-        animations.push([k, auxilaryArray[i]]);
+        animations.push([COLOR_CHANGE,COLOR_FOCUS,k,i]);
+        animations.push([HEIGHT_CHANGE,null,k,auxilaryArray[i]]);
+        animations.push([COLOR_CHANGE,COLOR_NORMAL,i,k]);
         mainArray[k++] = auxilaryArray[i++];
     }
     while(j <= endIdx){
-        animations.push([j,j]);
-        animations.push([j,j]);
-        animations.push([k, auxilaryArray[j]]);
+        animations.push([COLOR_CHANGE,COLOR_FOCUS,k,j]);
+        animations.push([HEIGHT_CHANGE,null,k,auxilaryArray[j]]);
+        animations.push([COLOR_CHANGE,COLOR_NORMAL,k,j]);
         mainArray[k++] = auxilaryArray[j++];
     }
 }

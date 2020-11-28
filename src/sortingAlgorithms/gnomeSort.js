@@ -1,5 +1,5 @@
 /** 
- This file computes insertion Gnome algorithm
+ This file computes Gnome sort algorithm
  on a given array "array" and rembember all the changes
  to display the Algorithm in const "animations"
 */
@@ -8,6 +8,10 @@
 Gnome sort
 https://en.wikipedia.org/wiki/Gnome_sort  
 */ 
+const COLOR_CHANGE = true;
+const COLOR_FOCUS = true;
+const COLOR_NORMAL = false;
+const HEIGHT_CHANGE = false;
 
 export function gnomeSort(array){
     const animations = [];
@@ -17,22 +21,22 @@ export function gnomeSort(array){
 
     while(index < lenth){
         if(index===0) index++;
-        animations.push([index,index-1]);
-        animations.push([index,index-1]);
+        animations.push([COLOR_CHANGE,COLOR_FOCUS,index,index-1]);
         if(array[index]>=array[index-1]){
-            animations.push([index, array[index]]);
-            animations.push([index, array[index]]);
+            animations.push([COLOR_CHANGE,COLOR_NORMAL,index,index-1]);
             index++;
         } 
         else{
-            animations.push([index, array[index-1]]);
-            animations.push([index-1, array[index]]);
+            animations.push([HEIGHT_CHANGE,null,index,array[index-1]]);
+            animations.push([HEIGHT_CHANGE,null,index-1,array[index]]);
             let t = array[index];
             array[index] = array[index-1];
             array[index-1] = t;
+            animations.push([COLOR_CHANGE,COLOR_NORMAL,index,index-1]);
             index--;
         }
     }
+    
     
     return animations;
 }

@@ -8,6 +8,11 @@
 Cocktail sort
 https://en.wikipedia.org/wiki/Cocktail_shaker_sort 
 */
+const COLOR_CHANGE = true;
+const COLOR_FOCUS = true;
+const COLOR_NORMAL = false;
+const HEIGHT_CHANGE = false;
+
 export function cocktailSort(array){
     const animations = [];
     if(array.length <= 1) return array;
@@ -19,19 +24,16 @@ export function cocktailSort(array){
         swapped=false;
 
         for(let i = start; i< end-1;++i){
-            animations.push([i,i+1]);
-            animations.push([i,i+1]);
+            animations.push([COLOR_CHANGE,COLOR_FOCUS,i,i+1]);
             if(array[i]>array[i+1]){
-                animations.push([i,array[i+1]]);
-                animations.push([i+1,array[i]]);
+                animations.push([HEIGHT_CHANGE,null,i, array[i+1]]);
+                animations.push([HEIGHT_CHANGE,null,i+1, array[i]]);
                 let t = array[i];
                 array[i] = array[i+1];
                 array[i+1] = t;
                 swapped=true;
-                continue;
             }
-            animations.push([i,array[i]]);
-            animations.push([i,array[i]]);
+            animations.push([COLOR_CHANGE,COLOR_NORMAL,i,i+1]);
         }
 
         if(!swapped){ 
@@ -42,19 +44,16 @@ export function cocktailSort(array){
         end--;
 
         for(let i=end-1;i>=start;i--){
-            animations.push([i,i+1]);
-            animations.push([i,i+1]);
+            animations.push([COLOR_CHANGE,COLOR_FOCUS,i,i+1]);
             if(array[i]>array[i+1]){
-                animations.push([i,array[i+1]]);
-                animations.push([i+1,array[i]]);
+                animations.push([HEIGHT_CHANGE,null,i, array[i+1]]);
+                animations.push([HEIGHT_CHANGE,null,i+1, array[i]]);
                 let t = array[i];
                 array[i] = array[i+1];
                 array[i+1] = t;
                 swapped=true;
-                continue;
             }
-            animations.push([i,array[i]]);
-            animations.push([i,array[i]]);
+            animations.push([COLOR_CHANGE,COLOR_NORMAL,i,i+1]);
         }
 
         start++;

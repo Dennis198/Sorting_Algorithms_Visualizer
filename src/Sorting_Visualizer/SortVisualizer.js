@@ -9,6 +9,7 @@ import {cocktailSort} from "../sortingAlgorithms/cocktailSort"
 import {selectionSort} from "../sortingAlgorithms/selectionSort";
 import {bogoSort} from "../sortingAlgorithms/bogoSort";
 import {shellSort} from "../sortingAlgorithms/shellSort";
+import {radixSort} from "../sortingAlgorithms/radixSort";
 import {gnomeSort} from "../sortingAlgorithms/gnomeSort";
 import { Button, Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -113,6 +114,14 @@ export default class SortVisualizer extends React.Component{
     }
 
     //Compute and animte Insertion Sort
+    radixSort(){
+        let newArray = this.state.array.slice();      
+        const animations = radixSort(newArray);
+        this.setState({isRunning: true});
+        this.animeteSort(animations,newArray);
+    }
+
+    //Compute and animte Insertion Sort
     shellSort(){
         let newArray = this.state.array.slice();      
         const animations = shellSort(newArray);
@@ -157,40 +166,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = mergeSort(newArray);
         this.setState({isRunning: true});
-
-        for(let i=0; i<animations.length; i++){
-            const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
-            const isColorChange = i % 3 !== 2;
-            if(isColorChange){
-                const [barOneIdx, barTwoIdx] = animations[i];
-                const barOneStyle = arrayBars[barOneIdx].style;
-                const barTwoStyle = arrayBars[barTwoIdx].style;
-                const color = i % 3 === 0 ? 'lightcoral' : 'darkslateblue';
-                setTimeout(() => {
-                    barOneStyle.backgroundColor = color;
-                    barTwoStyle.backgroundColor = color;
-                }, i * this.state.computeSpeed);
-            } else {
-                setTimeout(() => {
-                    const [barOneIdx, newHeight] = animations[i];
-                    const barOneStyle = arrayBars[barOneIdx].style;
-                    barOneStyle.height = `${newHeight}px`;
-                }, i * this.state.computeSpeed);
-            }
-        }
-        setTimeout(() => {
-            const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
-            for(let i=0; i<this.state.array.length;i++){
-                setTimeout(() => {
-                    const barOneStyle = arrayBars[i].style;
-                    barOneStyle.backgroundColor = "green";
-                }, i*0);
-            }
-
-            this.setState({isRunning: false});
-            this.setState({array: newArray});
-        }, animations.length*this.state.computeSpeed);
-
+        this.animeteSort(animations,newArray);
     }
 
     //Compute and animate quick sort
@@ -209,27 +185,26 @@ export default class SortVisualizer extends React.Component{
         this.animeteSort(animations, newArray);
     }
 
-    //animates the sort Algorithm
+    
+    //Animates the Sorting Algorithms
     animeteSort(animations,newArray){
-
+        
         for(let i=0; i<animations.length; i++){
             const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
-            const isColorChange = i % 4 < 2;
-            if(isColorChange){
-                const [barOneIdx, barTwoIdx] = animations[i];
+            const [colorChange, colorValue, barOneIdx, barTwoIdx_OR_Height] = animations[i];
+            if(colorChange){
                 const barOneStyle = arrayBars[barOneIdx].style;
-                const barTwoStyle = arrayBars[barTwoIdx].style;
-                const color = i % 4 === 0 ? 'lightcoral' : 'darkslateblue';
+                const barTwoStyle = arrayBars[barTwoIdx_OR_Height].style;
+                const color = colorValue ? 'lightcoral' : 'darkslateblue';
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
                 }, i * this.state.computeSpeed);
-            } else {
+            }else{
                 setTimeout(() => {
-                    const [barOneIdx, newHeight] = animations[i];
                     const barOneStyle = arrayBars[barOneIdx].style;
-                    barOneStyle.height = `${newHeight}px`;
-                }, i * this.state.computeSpeed);
+                    barOneStyle.height = `${barTwoIdx_OR_Height}px`;
+                }, i * this.state.computeSpeed);   
             }
         }
 
@@ -290,11 +265,11 @@ export default class SortVisualizer extends React.Component{
     }
 
     render(){
-        const {array} = this.state;
+        const {array, isRunning} = this.state;
 
         return(
             <div className="sortvisualizer">
-                {!this.state.isRunning ? 
+                {!isRunning ? 
                 <>
                     <div className="sortvisualizer__Button">
                         <Button variant="contained" color="secondary" onClick={(e) => this.handleSizeChange(e,this.state.sliderValue)}>Generate New Numbers</Button>
@@ -308,6 +283,7 @@ export default class SortVisualizer extends React.Component{
                     <div className="sortvisualizer__Button">
                         <Button variant="contained" color="primary" onClick={() => this.cocktailSort()}>Cocktail Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.gnomeSort()}>Gnome Sort</Button>
+                        <Button variant="contained" color="primary" onClick={() => this.radixSort()}>Radix Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.shellSort()}>Shell Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.bogoSort()}>Bogo Sort</Button>
                     </div>               
@@ -326,6 +302,7 @@ export default class SortVisualizer extends React.Component{
                     <div className="sortvisualizer__Button">
                         <Button disabled variant="contained" color="primary">Cocktail Sort</Button>
                         <Button disabled variant="contained" color="primary">Gnome Sort</Button>
+                        <Button disabled variant="contained" color="primary">Radix Sort</Button>
                         <Button disabled variant="contained" color="primary">Shell Sort</Button>
                         <Button disabled variant="contained" color="primary">Bogo Sort</Button>
                     </div> 
@@ -336,9 +313,11 @@ export default class SortVisualizer extends React.Component{
                         <div className="sortvisualizer__ArrayBar" key={idx} style={{height: `${value}px`, width:`${this.state.barSize}px`}}>                      
                         </div>
                     ))}
+                    <div className="sortvisualizer__ArrayBar_Stabalizer" key={5000} style={{height: `300px`, width:`${this.state.barSize}px`}}>                      
+                        </div>
                 </div>
                 <div className="sortvisualizer__Sliders">
-                    {!this.state.isRunning ? 
+                    {!isRunning ? 
                         <div className="sortvisualizer__Slider">
                             <PrettoSlider valueLabelDisplay="off" aria-label="pretto slider" defaultValue={5} min={0} max={50}
                                 onChange={(e, val) => this.handleSpeedChange(e, val)}  
@@ -360,7 +339,7 @@ export default class SortVisualizer extends React.Component{
                             </div>
                         </div>
                     }
-                    {!this.state.isRunning ? 
+                    {!isRunning ? 
                         <div className="sortvisualizer__Slider">
                             <PrettoSlider valueLabelDisplay="off" aria-label="pretto slider" defaultValue={DEFAULT_BAR_SLIDER} min={0} max={5}
                                 marks={true} onChangeCommitted={(e, val) => this.handleSizeChange(e,val)}
