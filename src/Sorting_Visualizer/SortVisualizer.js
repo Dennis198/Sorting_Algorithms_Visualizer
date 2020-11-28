@@ -102,7 +102,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = bubbleSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animte Insertion Sort
@@ -110,7 +110,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = insertionSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animte Insertion Sort
@@ -118,7 +118,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = radixSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animte Insertion Sort
@@ -126,7 +126,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = shellSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animate Selection sort
@@ -134,7 +134,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = selectionSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animate Bogo sort
@@ -142,7 +142,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = bogoSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animate Bogo sort
@@ -150,7 +150,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = gnomeSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animate Bogo sort
@@ -158,7 +158,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = cocktailSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animate merge sort
@@ -166,7 +166,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = mergeSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animate quick sort
@@ -174,7 +174,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = quickSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations,newArray);
+        this.animetaSort(animations,newArray);
     }
 
     //Compute and animate heap sort
@@ -182,13 +182,13 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = heapSort(newArray);
         this.setState({isRunning: true});
-        this.animeteSort(animations, newArray);
+        this.animateSort(animations, newArray);
     }
 
     
     //Animates the Sorting Algorithms
-    animeteSort(animations,newArray){
-        
+    animateSort(animations,newArray){
+        this.resetColor();
         for(let i=0; i<animations.length; i++){
             const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
             const [colorChange, colorValue, barOneIdx, barTwoIdx_OR_Height] = animations[i];
@@ -220,6 +220,16 @@ export default class SortVisualizer extends React.Component{
             this.setState({isRunning: false});
             this.setState({array: newArray});
         }, animations.length*this.state.computeSpeed);
+    }
+
+    resetColor(){
+            const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
+            for(let i=0; i<this.state.array.length;i++){
+                
+                    const barOneStyle = arrayBars[i].style;
+                    barOneStyle.backgroundColor = "darkslateblue";
+                
+            }
     }
 
     //event Handler for Speed Change (animation speed)
@@ -313,7 +323,7 @@ export default class SortVisualizer extends React.Component{
                         <div className="sortvisualizer__ArrayBar" key={idx} style={{height: `${value}px`, width:`${this.state.barSize}px`}}>                      
                         </div>
                     ))}
-                    <div className="sortvisualizer__ArrayBar_Stabalizer" key={5000} style={{height: `300px`, width:`${this.state.barSize}px`}}>                      
+                    <div className="sortvisualizer__ArrayBar_Stabalizer" key={5000} style={{height: `300px`, width:`5px`}}>                      
                         </div>
                 </div>
                 <div className="sortvisualizer__Sliders">
