@@ -275,7 +275,7 @@ export default class SortVisualizer extends React.Component{
     }
 
     render(){
-        const {array, isRunning} = this.state;
+        const {array, isRunning, barSize} = this.state;
 
         return(
             <div className="sortvisualizer">
@@ -320,7 +320,7 @@ export default class SortVisualizer extends React.Component{
                 }
                 <div className="sortvisualizer__ArrayBars">
                     {array.map((value,idx) =>(
-                        <div className="sortvisualizer__ArrayBar" key={idx} style={{height: `${value}px`, width:`${this.state.barSize}px`}}>                      
+                        <div className="sortvisualizer__ArrayBar" key={idx} style={{height: `${value}px`, width:`${barSize}px`}}>                      
                         </div>
                     ))}
                     <div className="sortvisualizer__ArrayBar_Stabalizer" key={5000} style={{height: `300px`, width:`5px`}}>                      
