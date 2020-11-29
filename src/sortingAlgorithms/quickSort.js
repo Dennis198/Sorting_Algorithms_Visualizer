@@ -22,6 +22,7 @@ export function quickSort(array){
 
 function quickSortHelper(array, left, right, animations){
     if(left < right){
+        //pi Index of Pivo element
         let pi = partition(array, left, right, animations);
         quickSortHelper(array, left, pi-1, animations);
         quickSortHelper(array, pi+1, right, animations);
@@ -29,7 +30,7 @@ function quickSortHelper(array, left, right, animations){
 }
 
 function partition(array, left, right, animations){
-    let pivot = array[right];
+    let pivot = array[right]; // Pivo element
     let l = left;
     let r = right - 1;
     while(l<r){
@@ -54,5 +55,5 @@ function partition(array, left, right, animations){
         array[l] = array[right];
         array[right] = t;
     }
-    return l;
+    return l; // Position of new Pivo element
 }

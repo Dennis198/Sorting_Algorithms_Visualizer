@@ -23,6 +23,7 @@ export function bogoSort(array){
     let temp;
     let counter = 0;
 
+    //Changes to Random position in the array and check if the array is sorted.
     while(!isSorted(array,animations) && counter<MAX_SORT_STEPS){
         randomI=Math.floor(Math.random()*length);
         randomJ=Math.floor(Math.random()*length);
@@ -39,6 +40,7 @@ export function bogoSort(array){
     return animations;
 }
 
+//Check if array is Sorted
 function isSorted(array,animations){
     for(let i=0;i<array.length-1;i++){
         animations.push([COLOR_CHANGE,COLOR_FOCUS,i,i]);

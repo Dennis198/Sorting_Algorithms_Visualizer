@@ -31,6 +31,7 @@ function mergeSortHelper(
 ){
     if(startIdx === endIdx) return;
     const middleIdx = Math.floor((startIdx+endIdx)/2);
+    //Split the array recursivly to smaller subarays
     mergeSortHelper(auxilaryArray, startIdx, middleIdx, mainArray, animations);
     mergeSortHelper(auxilaryArray, middleIdx+1, endIdx, mainArray, animations);
     doMerge(mainArray, startIdx, middleIdx, endIdx, auxilaryArray, animations); 

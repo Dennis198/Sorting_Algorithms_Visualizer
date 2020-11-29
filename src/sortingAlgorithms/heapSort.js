@@ -21,21 +21,26 @@ export function heapSort(array){
 }
 
 function heapSortHelper(array, animations){
+    // Create Heap-Attribute
     for(let i=array.length/2; i>=0; i--){
         heap(array, i, array.length-1,animations);
     }
 
+    // Sort
     for(let i=array.length-1; i>0;i--){
         animations.push([COLOR_CHANGE,COLOR_FOCUS,0,i]);
         animations.push([HEIGHT_CHANGE,null,0,array[i]]);
         animations.push([HEIGHT_CHANGE,null,i,array[0]]);
         animations.push([COLOR_CHANGE,COLOR_NORMAL,0,i]);
+        //Swap the smalles(root in Heap) to beginning
         let t = array[i];
         array[i] = array[0];
         array[0] = t;
+        //Create Heap-Attribute for Subtree
         heap(array, 0, i-1, animations);
     }
 
+    //Invert the array
     for(let i=0, k=array.length-1;i<array.length/2; i++){
         animations.push([COLOR_CHANGE,COLOR_FOCUS,i,k]);
         animations.push([HEIGHT_CHANGE,null,i,array[k]]);
@@ -52,6 +57,7 @@ function heap(array, father, end, animations){
     let left = 2 * father + 1;
     let right = 2 * father + 2;
     let son = father;
+
     if(left <= end){
         if(array[father]>array[left]) son = left;
     }

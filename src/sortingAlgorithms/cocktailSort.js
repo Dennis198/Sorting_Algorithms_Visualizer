@@ -20,14 +20,17 @@ export function cocktailSort(array){
     let start = 0;
     let end = array.length;
 
+    // if no elements have been swapped, then the list is sorted
     while(swapped){
         swapped=false;
 
         for(let i = start; i< end-1;++i){
             animations.push([COLOR_CHANGE,COLOR_FOCUS,i,i+1]);
+            // test whether the two elements are in the wrong order
             if(array[i]>array[i+1]){
                 animations.push([HEIGHT_CHANGE,null,i, array[i+1]]);
                 animations.push([HEIGHT_CHANGE,null,i+1, array[i]]);
+                // let the two elements change places
                 let t = array[i];
                 array[i] = array[i+1];
                 array[i+1] = t;
@@ -37,6 +40,7 @@ export function cocktailSort(array){
         }
 
         if(!swapped){ 
+            // we can exit the outer loop here if no swaps occurred.
             return animations;
         }
 
@@ -45,9 +49,11 @@ export function cocktailSort(array){
 
         for(let i=end-1;i>=start;i--){
             animations.push([COLOR_CHANGE,COLOR_FOCUS,i,i+1]);
+            // test whether the two elements are in the wrong order
             if(array[i]>array[i+1]){
                 animations.push([HEIGHT_CHANGE,null,i, array[i+1]]);
                 animations.push([HEIGHT_CHANGE,null,i+1, array[i]]);
+                // let the two elements change places
                 let t = array[i];
                 array[i] = array[i+1];
                 array[i+1] = t;
