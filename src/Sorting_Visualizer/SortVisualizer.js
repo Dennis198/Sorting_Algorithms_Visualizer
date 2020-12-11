@@ -72,6 +72,8 @@ import PropTypes from 'prop-types';
   const DEFAULT_MIN_VALUE=5;
 
 export default class SortVisualizer extends React.Component{
+    intervalID = 0;
+    intervalID_isSortFinished = 0;
     constructor(props){
         super(props);
 
@@ -182,53 +184,65 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = heapSort(newArray);
         this.setState({isRunning: true});
-        this.animateSort(animations, newArray);
+        this.animateSort2(animations, newArray);
     }
-
     
     //Animates the Sorting Algorithms
     animateSort(animations,newArray){
         this.resetColor();
-        for(let i=0; i<animations.length; i++){
+
+        let index=0;
+        let success = false;
+        this.intervalID = setInterval(() => {
             const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
-            const [colorChange, colorValue, barOneIdx, barTwoIdx_OR_Height] = animations[i];
+            const [colorChange, colorValue, barOneIdx, barTwoIdx_OR_Height] = animations[index];
             if(colorChange){
                 const barOneStyle = arrayBars[barOneIdx].style;
                 const barTwoStyle = arrayBars[barTwoIdx_OR_Height].style;
                 const color = colorValue ? 'lightcoral' : 'darkslateblue';
-                setTimeout(() => {
-                    barOneStyle.backgroundColor = color;
-                    barTwoStyle.backgroundColor = color;
-                }, i * this.state.computeSpeed);
+                barOneStyle.backgroundColor = color;
+                barTwoStyle.backgroundColor = color;
             }else{
-                setTimeout(() => {
-                    const barOneStyle = arrayBars[barOneIdx].style;
-                    barOneStyle.height = `${barTwoIdx_OR_Height}px`;
-                }, i * this.state.computeSpeed);   
+                const barOneStyle = arrayBars[barOneIdx].style;
+                barOneStyle.height = `${barTwoIdx_OR_Height}px`;               
             }
-        }
+            index++;
+            if(index===animations.length) {
+                this.stopInterval(this.intervalID);
+                success=true;
+            }
+        },this.state.computeSpeed);
 
-        setTimeout(() => {
-            const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
-            for(let i=0; i<this.state.array.length;i++){
-                setTimeout(() => {
-                    const barOneStyle = arrayBars[i].style;
-                    barOneStyle.backgroundColor = "green";
-                }, i*0);
+        //Checks every 500ms if Sorting animation is finished
+        this.intervalID_isSortFinished = setInterval(() => {
+            if(success){
+                const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
+                for(let i=0; i<this.state.array.length;i++){
+                        const barOneStyle = arrayBars[i].style;
+                        barOneStyle.backgroundColor = "green";
+                } 
+                this.stopInterval(this.intervalID_isSortFinished);
+                this.setState({isRunning: false, array: newArray});
             }
-             
-            this.setState({isRunning: false});
-            this.setState({array: newArray});
-        }, animations.length*this.state.computeSpeed);
+        },500);
+    }
+
+       //Stops the "Visual" Training
+    stopInterval(id){
+        clearInterval(id);
+        this.setState({isRunning:false});
+    }
+
+    stopAllInterval(){
+        this.stopInterval(this.intervalID);
+        this.stopInterval(this.intervalID_isSortFinished);
     }
 
     resetColor(){
             const arrayBars = document.getElementsByClassName('sortvisualizer__ArrayBar');
             for(let i=0; i<this.state.array.length;i++){
-                
                     const barOneStyle = arrayBars[i].style;
-                    barOneStyle.backgroundColor = "darkslateblue";
-                
+                    barOneStyle.backgroundColor = "darkslateblue";              
             }
     }
 
@@ -283,14 +297,15 @@ export default class SortVisualizer extends React.Component{
                 <>
                     <div className="sortvisualizer__Button">
                         <Button variant="contained" color="secondary" onClick={(e) => this.handleSizeChange(e,this.state.sliderValue)}>Generate New Numbers</Button>
+                        <Button variant="contained" color="secondary" onClick={() => this.stopAllInterval()}>Stop</Button>
                         <Button variant="contained" color="primary" onClick={() => this.bubbleSort()}>Bubble Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.selectionSort()}>Selection Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.insertionSort()}>Insertion Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.mergeSort()}>Merge Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.quickSort()}>Quick Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.heapSort()}>Heap Sort</Button>
                     </div>
                     <div className="sortvisualizer__Button">
+                        <Button variant="contained" color="primary" onClick={() => this.heapSort()}>Heap Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.cocktailSort()}>Cocktail Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.gnomeSort()}>Gnome Sort</Button>
                         <Button variant="contained" color="primary" onClick={() => this.radixSort()}>Radix Sort</Button>
@@ -302,14 +317,15 @@ export default class SortVisualizer extends React.Component{
                 <>
                     <div className="sortvisualizer__Button">
                         <Button disabled variant="contained" color="secondary">Generate New Numbers</Button>
+                        <Button variant="contained" color="secondary" onClick={() => this.stopAllInterval()}>Stop</Button>
                         <Button disabled variant="contained" color="primary">Bubble Sort</Button>
                         <Button disabled variant="contained" color="primary">Selection Sort</Button>
                         <Button disabled variant="contained" color="primary">Insertion Sort</Button>
                         <Button disabled variant="contained" color="primary">Merge Sort</Button>
                         <Button disabled variant="contained" color="primary">Quick Sort</Button>
-                        <Button disabled variant="contained" color="primary">Heap Sort</Button>
                     </div>
                     <div className="sortvisualizer__Button">
+                        <Button disabled variant="contained" color="primary">Heap Sort</Button>
                         <Button disabled variant="contained" color="primary">Cocktail Sort</Button>
                         <Button disabled variant="contained" color="primary">Gnome Sort</Button>
                         <Button disabled variant="contained" color="primary">Radix Sort</Button>
