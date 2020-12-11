@@ -184,7 +184,7 @@ export default class SortVisualizer extends React.Component{
         let newArray = this.state.array.slice();      
         const animations = heapSort(newArray);
         this.setState({isRunning: true});
-        this.animateSort2(animations, newArray);
+        this.animateSort(animations, newArray);
     }
     
     //Animates the Sorting Algorithms
@@ -293,47 +293,23 @@ export default class SortVisualizer extends React.Component{
 
         return(
             <div className="sortvisualizer">
-                {!isRunning ? 
-                <>
-                    <div className="sortvisualizer__Button">
-                        <Button variant="contained" color="secondary" onClick={(e) => this.handleSizeChange(e,this.state.sliderValue)}>Generate New Numbers</Button>
+                <div className="sortvisualizer__Button">
+                        <Button disabled={isRunning} variant="contained" color="secondary" onClick={(e) => this.handleSizeChange(e,this.state.sliderValue)}>Generate New Numbers</Button>
                         <Button variant="contained" color="secondary" onClick={() => this.stopAllInterval()}>Stop</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.bubbleSort()}>Bubble Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.selectionSort()}>Selection Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.insertionSort()}>Insertion Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.mergeSort()}>Merge Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.quickSort()}>Quick Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.bubbleSort()}>Bubble Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.selectionSort()}>Selection Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.insertionSort()}>Insertion Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.mergeSort()}>Merge Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.quickSort()}>Quick Sort</Button>
                     </div>
                     <div className="sortvisualizer__Button">
-                        <Button variant="contained" color="primary" onClick={() => this.heapSort()}>Heap Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.cocktailSort()}>Cocktail Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.gnomeSort()}>Gnome Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.radixSort()}>Radix Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.shellSort()}>Shell Sort</Button>
-                        <Button variant="contained" color="primary" onClick={() => this.bogoSort()}>Bogo Sort</Button>
-                    </div>               
-                </>
-                    :
-                <>
-                    <div className="sortvisualizer__Button">
-                        <Button disabled variant="contained" color="secondary">Generate New Numbers</Button>
-                        <Button variant="contained" color="secondary" onClick={() => this.stopAllInterval()}>Stop</Button>
-                        <Button disabled variant="contained" color="primary">Bubble Sort</Button>
-                        <Button disabled variant="contained" color="primary">Selection Sort</Button>
-                        <Button disabled variant="contained" color="primary">Insertion Sort</Button>
-                        <Button disabled variant="contained" color="primary">Merge Sort</Button>
-                        <Button disabled variant="contained" color="primary">Quick Sort</Button>
-                    </div>
-                    <div className="sortvisualizer__Button">
-                        <Button disabled variant="contained" color="primary">Heap Sort</Button>
-                        <Button disabled variant="contained" color="primary">Cocktail Sort</Button>
-                        <Button disabled variant="contained" color="primary">Gnome Sort</Button>
-                        <Button disabled variant="contained" color="primary">Radix Sort</Button>
-                        <Button disabled variant="contained" color="primary">Shell Sort</Button>
-                        <Button disabled variant="contained" color="primary">Bogo Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.heapSort()}>Heap Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.cocktailSort()}>Cocktail Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.gnomeSort()}>Gnome Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.radixSort()}>Radix Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.shellSort()}>Shell Sort</Button>
+                        <Button disabled={isRunning} variant="contained" color="primary" onClick={() => this.bogoSort()}>Bogo Sort</Button>
                     </div> 
-                </>
-                }
                 <div className="sortvisualizer__ArrayBars">
                     {array.map((value,idx) =>(
                         <div className="sortvisualizer__ArrayBar" key={idx} style={{height: `${value}px`, width:`${barSize}px`}}>                      
@@ -343,9 +319,8 @@ export default class SortVisualizer extends React.Component{
                         </div>
                 </div>
                 <div className="sortvisualizer__Sliders">
-                    {!isRunning ? 
                         <div className="sortvisualizer__Slider">
-                            <PrettoSlider valueLabelDisplay="off" aria-label="pretto slider" defaultValue={5} min={0} max={50}
+                            <PrettoSlider disabled={isRunning} valueLabelDisplay="off" aria-label="pretto slider" defaultValue={5} min={0} max={50}
                                 onChange={(e, val) => this.handleSpeedChange(e, val)}  
                             />
                             <div className="sortvisualizer__Slider__Label">
@@ -354,20 +329,8 @@ export default class SortVisualizer extends React.Component{
                                 <h5>Slow</h5>
                             </div>
                         </div>
-                    :
                         <div className="sortvisualizer__Slider">
-                            <PrettoSlider disabled valueLabelDisplay="off" aria-label="pretto slider" defaultValue={5} min={0} max={50}  
-                            />
-                            <div className="sortvisualizer__Slider__Label">
-                                <h5>Fast</h5>
-                                <h4>Compute Speed</h4>
-                                <h5>Slow</h5>
-                            </div>
-                        </div>
-                    }
-                    {!isRunning ? 
-                        <div className="sortvisualizer__Slider">
-                            <PrettoSlider valueLabelDisplay="off" aria-label="pretto slider" defaultValue={DEFAULT_BAR_SLIDER} min={0} max={5}
+                            <PrettoSlider disabled={isRunning} valueLabelDisplay="off" aria-label="pretto slider" defaultValue={DEFAULT_BAR_SLIDER} min={0} max={5}
                                 marks={true} onChangeCommitted={(e, val) => this.handleSizeChange(e,val)}
                              />
                             <div className="sortvisualizer__Slider__Label">
@@ -376,16 +339,6 @@ export default class SortVisualizer extends React.Component{
                                 <h5>Big</h5>
                             </div>
                         </div>
-                    :
-                        <div className="sortvisualizer__Slider">
-                            <PrettoSlider  disabled valueLabelDisplay="off" aria-label="pretto slider" defaultValue={DEFAULT_BAR_SLIDER} min={0} max={5} />
-                            <div className="sortvisualizer__Slider__Label">
-                                <h5>Small</h5>
-                                <h4>Bar Size</h4>
-                                <h5>Big</h5>
-                            </div>  
-                        </div>
-                    }
                 </div>
             </div>
         )
